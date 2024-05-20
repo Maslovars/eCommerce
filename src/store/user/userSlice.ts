@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface UserSlice {
+export interface IUserSlice {
   email: string;
   password: string;
-  name: string;
-  isLoggedIn: boolean;
+  name?: string;
+  isLoggedIn?: boolean;
 }
 
-const initialState: UserSlice = {
+const initialState: IUserSlice = {
   email: '',
   password: '',
   name: '',
@@ -28,9 +28,13 @@ export const userSlice = createSlice({
     nameFill: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
+    setLoggedIn: (state) => {
+      state.isLoggedIn = !state.isLoggedIn;
+    },
   },
 });
 
-export const { emailFill, passwordFill, nameFill } = userSlice.actions;
+export const { emailFill, passwordFill, nameFill, setLoggedIn } =
+  userSlice.actions;
 
 export default userSlice.reducer;
