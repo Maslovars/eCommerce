@@ -4,20 +4,31 @@ import {
   IUserSlice,
   emailFill,
   passwordFill,
+  setLoggedIn,
 } from '../../store/user/userSlice.ts';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import Toast from '../../components/Toast.tsx';
 
 export const SignIn = () => {
   const { email, password } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IUserSlice>({ mode: 'onTouched' });
-  const onSubmit: SubmitHandler<IUserSlice> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<IUserSlice> = (data) => {
+    console.log(data);
+    dispatch(setLoggedIn());
+    navigate('/');
+    localStorage.setItem('eEmail', data.email);
+    localStorage.setItem('ePassword', data.password);
+    Toast({ message: 'Login successful', status: 'success' });
+  };
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

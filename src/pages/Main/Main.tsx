@@ -1,6 +1,7 @@
 import { Header, ItemCard, Footer } from '../../components';
 import { Items } from '../../types.ts';
 import { useGetItems } from '../../hooks/';
+import CardPreview from '../../components/CardPreview.tsx';
 
 export const Main = () => {
   const items: Items[] = useGetItems();
@@ -18,6 +19,7 @@ export const Main = () => {
               title={item.title}
             />
           ))}
+          <CardPreview />
         </div>
       </div>
       <Footer />

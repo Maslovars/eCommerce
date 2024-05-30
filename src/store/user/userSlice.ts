@@ -9,10 +9,12 @@ export interface IUserSlice {
 }
 
 const initialState: IUserSlice = {
-  email: '',
-  password: '',
+  email: localStorage.getItem('eEmail') || '',
+  password: localStorage.getItem('ePassword') || '',
   name: '',
-  isLoggedIn: false,
+  isLoggedIn: !!(
+    localStorage.getItem('ePassword') && localStorage.getItem('eEmail')
+  ),
 };
 
 export const userSlice = createSlice({

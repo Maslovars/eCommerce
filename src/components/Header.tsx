@@ -17,6 +17,9 @@ import {
   PlayCircleIcon,
 } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import ProfileBadge from './ProfileBadge';
 
 const products = [
   {
@@ -61,6 +64,7 @@ function classNames(...classes: string[]) {
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user);
 
   return (
     <header className="bg-white">
@@ -163,12 +167,16 @@ export const Header = () => {
           </a>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            to={'/signIn'}
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
+          {isLoggedIn ? (
+            <ProfileBadge />
+          ) : (
+            <Link
+              to={'/signIn'}
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Log in <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
         </div>
       </nav>
       <Dialog
@@ -238,12 +246,29 @@ export const Header = () => {
                 </a>
               </div>
               <div className="py-6">
-                <Link
-                  to={'/signIn'}
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
+                {isLoggedIn ? (
+                  <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                    <svg
+                      className="absolute w-12 h-12 text-gray-400 -left-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                ) : (
+                  <Link
+                    to={'/signIn'}
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Log in
+                  </Link>
+                )}
               </div>
             </div>
           </div>
