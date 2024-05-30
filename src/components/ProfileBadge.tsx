@@ -1,15 +1,23 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store.ts';
 import { setLoggedIn } from '../store/user/userSlice.ts';
 import Toast from './Toast.tsx';
+import { useOutsideClick } from '../hooks';
+import { useEffect, useState } from 'react';
 
 const ProfileBadge = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { email } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
-  const logOut = () => {
+  const { ref, isActive, setIsActive } = useOutsideClick(false);
+
+  useEffect(() => {
+    setIsActive(isOpen);
+    setIsOpen(!isActive);
+  }, [isOpen]);
+
+  const signOut = () => {
     localStorage.removeItem('ePassword');
     localStorage.removeItem('eEmail');
     dispatch(setLoggedIn());
@@ -35,8 +43,9 @@ const ProfileBadge = () => {
           ></path>
         </svg>
       </div>
-      {isOpen && (
+      {isActive && (
         <div
+          ref={ref}
           id="userDropdown"
           className="z-10 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 top-16"
         >
@@ -56,7 +65,7 @@ const ProfileBadge = () => {
               </a>
             </li>
           </ul>
-          <div className="py-1" onClick={logOut}>
+          <div className="py-1" onClick={signOut}>
             <span className=" cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
               Sign out
             </span>
