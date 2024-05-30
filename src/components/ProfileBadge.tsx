@@ -14,7 +14,6 @@ const ProfileBadge = () => {
 
   useEffect(() => {
     setIsActive(isOpen);
-    setIsOpen(!isActive);
   }, [isOpen]);
 
   const signOut = () => {

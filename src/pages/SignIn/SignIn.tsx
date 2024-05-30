@@ -9,11 +9,19 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Toast from '../../components/Toast.tsx';
+import { useEffect } from 'react';
 
 export const SignIn = () => {
   const { email, password } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if ('ePassword' && localStorage.getItem('eEmail')) {
+      setTimeout(() => navigate('/'), 300);
+      Toast({ message: 'User already logged in', status: 'error' });
+    }
+  }, [navigate]);
 
   const {
     register,

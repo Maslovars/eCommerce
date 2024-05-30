@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Toast from '../../components/Toast.tsx';
+import { useEffect } from 'react';
 
 export const RegistrationPage = () => {
   const { email, password, name } = useSelector(
@@ -17,7 +18,13 @@ export const RegistrationPage = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // console.log(email, password, name);
+
+  useEffect(() => {
+    if ('ePassword' && localStorage.getItem('eEmail')) {
+      setTimeout(() => navigate('/'), 300);
+      Toast({ message: 'User already logged in', status: 'error' });
+    }
+  }, [navigate]);
 
   const {
     register,
