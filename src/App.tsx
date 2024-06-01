@@ -2,11 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import { SignIn, Main, EmptyPage, RegistrationPage } from './pages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import CardPreview from './components/CardPreview';
-
 function App() {
   return (
-    // <CardPreview />
     <>
       <Routes>
         <Route path="/signIn" element={<SignIn />} />

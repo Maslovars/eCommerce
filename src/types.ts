@@ -5,4 +5,8 @@ export interface Items {
   price: number;
   category: string;
   image: string;
+  rating?: {
+    count: number;
+    rate: number;
+  };
 }
